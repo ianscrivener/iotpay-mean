@@ -44,6 +44,8 @@ exports.scriv = function(req, res) {
  */
 exports.create = function(req, res) {
   var log = new Log(req.body);
+  var device = req.device;
+  var customer = req.device.customer;
 
   console.log('POST from Arduino', req.body);
 
@@ -53,6 +55,24 @@ exports.create = function(req, res) {
         message: errorHandler.getErrorMessage(err)
       });
     } else {
+
+      //Charge user logic - charge if the log percentage exceeded exceeds the threshold
+      if(log.percExceeded > device.config.thresholdLimit) {
+        var data  = {amount:100, description:'IoTPay Charge for device' + device.name};
+        var customerData = {cardNumber: customer.cardNumber, expMonth: customer.expMonth, expYear: customer.expYear, cvc: customer.cvc, mobile: customer.mobile};
+
+        chargeUser(data, customerData, function(err,ret){
+          if(err){
+            console.log('chargeUser ERROR', err);
+            res.jsonp(err);
+          }
+          else{
+            console.log('chargeUser OK', ret);
+            res.jsonp(ret);
+          }
+        });
+      } 
+
       res.jsonp(log);
     }
   });

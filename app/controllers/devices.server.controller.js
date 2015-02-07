@@ -112,6 +112,9 @@ exports.config = function(req, res) {
  */
 exports.deviceByID = function(req, res, next, id) { 
 	Device.find({}).populate('biller').exec(function(err, devices) {
+		if(err) {
+			console.log(err);
+		}
 		var device = devices[0];	
 		if (err) return next(err);
 		if (! device) return next(new Error('Failed to load Device ' + id));

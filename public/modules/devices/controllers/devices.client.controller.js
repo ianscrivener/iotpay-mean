@@ -16,7 +16,7 @@ angular.module('devices').controller('DevicesController', ['$scope', '$statePara
 					name: name
 				});
 				device.$save(function(response) {
-					console.log(response);
+					$scope.devices.push(response);
 
 					// Clear form fields
 					$scope.name = '';
@@ -27,22 +27,27 @@ angular.module('devices').controller('DevicesController', ['$scope', '$statePara
       });
 		};
 
-		// Create new Device
-		$scope.create = function() {
-			// Create new Device object
-			var device = new Devices ({
-				name: this.name
-			});
+		$scope.editDeviceModal = function(device) {
+			$scope.deviceCopy = angular.copy(device);
+		 	var modalInstance = $modal.open({
+        templateUrl: '/modules/devices/views/edit.modal.client.view.html',
+        controller: 'DevicesController',
+        scope: $scope
+      });
+      modalInstance.result.then(function(deviceCopy) {
+      	device = deviceCopy; 
 
-			// Redirect after save
-			device.$save(function(response) {
-				$location.path('devices/' + response._id);
-
-				// Clear form fields
-				$scope.name = '';
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
+				device.$update(function(response) {
+					$scope.devices.forEach(function(device, i) {
+						if(device._id === response._id) {
+							$scope.devices[i] = response;
+						}
+					});
+				}, function(errorResponse) {
+					$scope.error = errorResponse.data.message;
+				});
+      }, function() {
+      });
 		};
 
 		// Remove existing Device

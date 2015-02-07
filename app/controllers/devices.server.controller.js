@@ -125,8 +125,6 @@ exports.deviceByID = function(req, res, next, id) {
  */
 exports.hasAuthorization = function(req, res, next) {
 
-	console.log(req.device.biller.id);
-	console.log(req.user.id);
 	if (req.device.biller.id !== req.user.id) {
 		return res.status(403).send('User is not authorized');
 	}

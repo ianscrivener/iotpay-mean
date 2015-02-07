@@ -16,7 +16,6 @@
             <th class="text-center">Edit</th>
             <th class="text-center">Settings</th>
             <th class="text-center">Delete</th>
-            <th class="text-center">Users</th>
           </tr>
           <tr data-ng-repeat="device in devices">
             <td class="text-body"><a ng-click="editDeviceModal()">{{device.name}}</a></td>
@@ -32,9 +31,6 @@
             </td>
             <td class="text-center">
               <button ng-click="remove(device)" tooltip="Delete device" tooltip-popup-delay="500" class="btn btn-default icon"><i class="glyphicon glyphicon-trash"></i></button>
-            </td>
-            <td class="text-center">
-              <button ng-href="" tooltip="Add and delete users for the device" tooltip-popup-delay="500" class="btn btn-default icon"><i class="glyphicon glyphicon-user"></i></button>
             </td>
           </tr>
         </table>

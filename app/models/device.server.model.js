@@ -29,10 +29,10 @@ var DeviceSchema = new Schema({
 		default: 'OK',
 		enum: ['OK', 'Breach']
 	},
-	customers: [{
+	customer: {
 		type: Schema.ObjectId,
 		ref: 'User'
-	}],
+	},
 	alias: {
 		type: String,
 	},

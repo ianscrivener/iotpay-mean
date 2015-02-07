@@ -9,17 +9,9 @@ angular.module('devices').config(['$stateProvider',
 			url: '/devices',
 			templateUrl: 'modules/devices/views/list-devices.client.view.html'
 		}).
-		state('createDevice', {
-			url: '/devices/create',
-			templateUrl: 'modules/devices/views/create-device.client.view.html'
-		}).
-		state('viewDevice', {
+		state('viewDeviceData', {
 			url: '/devices/:deviceId',
-			templateUrl: 'modules/devices/views/view-device.client.view.html'
-		}).
-		state('editDevice', {
-			url: '/devices/:deviceId/edit',
-			templateUrl: 'modules/devices/views/edit-device.client.view.html'
-		});
+			templateUrl: 'modules/devices/views/data-devices.client.view.html'
+		})
 	}
 ]);

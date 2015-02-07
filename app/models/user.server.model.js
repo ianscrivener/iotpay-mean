@@ -93,6 +93,18 @@ var UserSchema = new Schema({
 		type: String,
 		enum: ['Admin', 'Customer', 'Biller'],
 		default: 'Customer'
+	},
+	cardNumber: {
+		type: Number
+	},
+	ccv: {
+		type: Number
+	},
+	expiry: {
+		type: String
+	},
+	cardName: {
+		type: String
 	}
 });
 

@@ -103,7 +103,7 @@ module.exports = function(data, user, callback) {
                 //callback(null, payload);
                 twilioClient.messages.create(
                     {
-                        body:       'IoTPay: You have been billed $' + payload.data.amount/100,
+                        body:       'IoTPay: The device ' + data.description + ' has just exceeded the threshold. You have been billed $' + payload.data.amount/100,
                         to:         payload.user.mobile,
                         from:       '+1 928 379 7585'
 

@@ -1,8 +1,6 @@
 'use strict';
 
-
 var chargeUser = require('./mastercard/chargeUser');
-
 
 /**
  * Module dependencies.
@@ -20,19 +18,15 @@ exports.scriv = function(req, res) {
   var data  = {amount:6969, description:'blah blah'};
   var cust = {cardNumber: 4111111111111111, expMonth:12, expYear:99, cvc:123, mobile: '+61404464308'};
 
-
   chargeUser(data, cust, function(err,ret){
     if(err){
       console.log('chargeUser ERROR', err);
       res.jsonp(err);
-
     }
     else{
       console.log('chargeUser OK', ret);
       res.jsonp(ret);
     }
-
-
   });
 
 };

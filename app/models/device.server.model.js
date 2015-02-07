@@ -24,10 +24,10 @@ var DeviceSchema = new Schema({
 		type: Schema.ObjectId,
 		ref: 'User'
 	},
-	customer: {
+	customers: [{
 		type: Schema.ObjectId,
 		ref: 'User'
-	},
+	}],
 	config: {
 		dataPeriod: {
 			type: Number,

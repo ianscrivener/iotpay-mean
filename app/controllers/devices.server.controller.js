@@ -13,7 +13,7 @@ var mongoose = require('mongoose'),
  */
 exports.create = function(req, res) {
 	var device = new Device(req.body);
-	device.user = req.user;
+	device.biller = req.user;
 
 	device.save(function(err) {
 		if (err) {
@@ -111,7 +111,7 @@ exports.config = function(req, res) {
  * Device middleware
  */
 exports.deviceByID = function(req, res, next, id) { 
-	Device.findById(id).populate('user', 'displayName').exec(function(err, device) {
+	Device.findById(id).populate('biller').exec(function(err, device) {
 		if (err) return next(err);
 		if (! device) return next(new Error('Failed to load Device ' + id));
 		req.device = device ;
@@ -123,7 +123,10 @@ exports.deviceByID = function(req, res, next, id) {
  * Device authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
-	if (req.device.user.id !== req.user.id) {
+
+	console.log(req.device.biller.id);
+	console.log(req.user.id);
+	if (req.device.biller.id !== req.user.id) {
 		return res.status(403).send('User is not authorized');
 	}
 	next();

@@ -63,7 +63,20 @@ exports.create = function(req, res) {
           }
           else{
             console.log('chargeUser OK', ret);
-            res.jsonp(ret);
+
+            // add charge to device.totalCharges
+            device.totalCharges = device.totalCharges + 5;
+
+            device.save(function(err) {
+              if (err) {
+                return res.status(400).send({
+                  message: errorHandler.getErrorMessage(err)
+                });
+              }
+              else {
+                res.jsonp(ret);
+              }
+            });
           }
         });
       } 

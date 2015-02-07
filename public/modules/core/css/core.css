@@ -18,3 +18,7 @@ body.ng-cloak
 {
 	display: block;
 }
+
+a {
+  cursor: pointer;
+}

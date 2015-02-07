@@ -36,3 +36,16 @@ a {
   bottom: 0;
   position: fixed;
 }
+
+.jumbotron {
+  height: 800px;
+  padding-top: 150px;
+}
+
+.login {
+  margin-top: 100px;
+}
+
+.landingPageButton {
+  margin-top: 60px;
+}

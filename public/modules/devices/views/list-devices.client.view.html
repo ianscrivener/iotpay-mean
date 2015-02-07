@@ -10,7 +10,7 @@
                 <span>Device Name</span>
             </th>
             <th class="text-center">
-                <span>Status</span>
+                <span>Total Charges</span>
             </th>
             <th class="text-center">Data</th>
             <th class="text-center">Edit</th>
@@ -19,7 +19,7 @@
           </tr>
           <tr data-ng-repeat="device in devices">
             <td class="text-body"><a ng-click="editDeviceModal(device)">{{device.name}}</a></td>
-            <td class="text-center">{{device.status}}</td>
+            <td class="text-center">{{device.totalCharges | currency}}</td>
             <td class="text-center">
               <button ng-click="viewDeviceData(device)" tooltip="View latest device data" tooltip-popup-delay="500" class="btn btn-default icon"><i class="glyphicon glyphicon-signal"></i></button>
             </td>

@@ -52,7 +52,7 @@ var DeviceSchema = new Schema({
 		},
 		thresholdLimit: {
 			type: Number,
-			default: 75
+			default: 4
 		}
 	}
 });

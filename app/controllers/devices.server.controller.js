@@ -128,7 +128,7 @@ exports.deviceByName = function(req, res, next, name) {
 			console.log(err);
 		}
 		if (err) return next(err);
-		if (! device) return next(new Error('Failed to load Device ' + id));
+		if (! device) return next(new Error('Failed to load Device ' + name));
 		req.device = device ;
 		next();
 	});

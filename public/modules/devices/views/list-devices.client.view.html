@@ -21,7 +21,7 @@
             <td class="text-body"><a ng-click="editDeviceModal()">{{device.name}}</a></td>
             <td class="text-center">{{device.status}}</td>
             <td class="text-center">
-              <button ng-href="/devices/{{device._id}}" tooltip="View latest device data" tooltip-popup-delay="500" class="btn btn-default icon"><i class="glyphicon glyphicon-signal"></i></button>
+              <button ng-click="viewDeviceData(device)" tooltip="View latest device data" tooltip-popup-delay="500" class="btn btn-default icon"><i class="glyphicon glyphicon-signal"></i></button>
             </td>
             <td class="text-center">
               <button ng-click="editDeviceModal(device)" tooltip="Edit device name" tooltip-popup-delay="500" class="btn btn-default icon"><i class="glyphicon glyphicon-pencil"></i></button>

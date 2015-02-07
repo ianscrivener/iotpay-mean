@@ -7,7 +7,7 @@ module.exports = function(app) {
 
   // Devices Routes
 
-  app.route('/logs/:deviceAlias')
+  app.route('/logs/:deviceId')
       .get(devices.hasAuthorization, logs.list)
       .post(logs.create);  //TODO: secure this route via secret in header (post will be coming from IoT device)
 

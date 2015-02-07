@@ -1,10 +1,23 @@
 'use strict';
 
 // Devices controller
-angular.module('devices').controller('DevicesController', ['$scope', '$stateParams', '$location', '$modal', 'Authentication', 'Devices',
-	function($scope, $stateParams, $location, $modal, Authentication, Devices) {
+angular.module('devices').controller('DevicesController', ['$scope', '$http', '$stateParams', '$location', '$modal', 'Authentication', 'Devices',
+	function($scope, $http, $stateParams, $location, $modal, Authentication, Devices) {
 		$scope.authentication = Authentication;
 
+
+		$scope.viewDeviceData = function(device) {
+			$location.path('devices/' + device._id);
+		};
+
+		$scope.findOneLog = function() {
+			$http({
+        method: 'GET',
+        url: '/logs/' + $stateParams.deviceId,
+      }).success(function(logs) {
+        $scope.log = logs[0];
+      });
+		};
 
 		$scope.createNewDeviceModal = function() {
 		 var modalInstance = $modal.open({

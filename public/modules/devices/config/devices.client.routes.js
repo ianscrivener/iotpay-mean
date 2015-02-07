@@ -12,6 +12,6 @@ angular.module('devices').config(['$stateProvider',
 		state('viewDeviceData', {
 			url: '/devices/:deviceId',
 			templateUrl: 'modules/devices/views/data-devices.client.view.html'
-		})
+		});
 	}
 ]);

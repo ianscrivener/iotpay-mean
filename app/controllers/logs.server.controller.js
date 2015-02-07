@@ -16,6 +16,10 @@ exports.create = function(req, res) {
 
   console.log('POST from Arduino', req.body);
 
+
+
+
+
   log.save(function(err) {
     if (err) {
       return res.status(400).send({

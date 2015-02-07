@@ -1,9 +1,22 @@
 'use strict';
 
 // Devices controller
-angular.module('devices').controller('DevicesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Devices',
-	function($scope, $stateParams, $location, Authentication, Devices) {
+angular.module('devices').controller('DevicesController', ['$scope', '$stateParams', '$location', '$modal', 'Authentication', 'Devices',
+	function($scope, $stateParams, $location, $modal, Authentication, Devices) {
 		$scope.authentication = Authentication;
+
+
+		$scope.createNewDeviceModal = function() {
+		 var modalInstance = $modal.open({
+        templateUrl: '/modules/devices/views/create.modal.client.view.html',
+        controller: 'DevicesController',
+        windowClass: 'wide-modal'
+      });
+      modalInstance.result.then(function(device) {
+
+      }, function() {
+      });
+		};
 
 		// Create new Device
 		$scope.create = function() {

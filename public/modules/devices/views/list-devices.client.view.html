@@ -31,7 +31,7 @@
               <button ng-click="settingsModal(device)" tooltip="Edit device thresholds and settings" tooltip-popup-delay="500" class="btn btn-default icon"><i class="glyphicon glyphicon glyphicon-cog"></i></button>
             </td>
             <td class="text-center">
-              <button ng-click="deleteDevice(device)" tooltip="Delete device" tooltip-popup-delay="500" class="btn btn-default icon"><i class="glyphicon glyphicon-trash"></i></button>
+              <button ng-click="remove(device)" tooltip="Delete device" tooltip-popup-delay="500" class="btn btn-default icon"><i class="glyphicon glyphicon-trash"></i></button>
             </td>
             <td class="text-center">
               <button ng-href="" tooltip="Add and delete users for the device" tooltip-popup-delay="500" class="btn btn-default icon"><i class="glyphicon glyphicon-user"></i></button>
@@ -43,13 +43,13 @@
   </div>
 
     <div class="alert alert-warning text-center" data-ng-hide="!devices.$resolved || devices.length">
-    	No Devices yet, why don't you <a data-ng-click="createNewDevice()">create one</a>?
+    	No Devices yet, why don't you <a data-ng-click="createNewDeviceModal()">create one</a>?
     </div>
 
    <div class="row">
     <div class="col-sm-12">
       <div class="btn-toolbar">
-        <button data-ng-click="createNewDevice()" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i><span>&nbspNew Device</span></button>
+        <button data-ng-click="createNewDeviceModal()" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i><span>&nbspNew Device</span></button>
       </div>
     </div>
   </div> 

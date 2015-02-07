@@ -33,6 +33,9 @@ var DeviceSchema = new Schema({
 		type: Schema.ObjectId,
 		ref: 'User'
 	}],
+	alias: {
+		type: String,
+	},
 	config: {
 		dataPeriod: {
 			type: Number,

@@ -14,7 +14,7 @@ module.exports = function(app) {
 		.put(users.requiresLogin, devices.hasAuthorization, devices.update)
 		.delete(users.requiresLogin, devices.hasAuthorization, devices.delete);
 
-	app.route('/devices/config')
+	app.route('/devices/temp/config')
 		.get(devices.config);
 
 	// Finish by binding the Device middleware

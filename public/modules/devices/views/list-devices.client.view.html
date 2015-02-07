@@ -14,11 +14,11 @@
             </th>
             <th class="text-center">Data</th>
             <th class="text-center">Edit</th>
-            <th class="text-center">Settings</th>
+            <!-- <th class="text-center">Settings</th> -->
             <th class="text-center">Delete</th>
           </tr>
           <tr data-ng-repeat="device in devices">
-            <td class="text-body"><a ng-click="editDeviceModal()">{{device.name}}</a></td>
+            <td class="text-body"><a ng-click="editDeviceModal(device)">{{device.name}}</a></td>
             <td class="text-center">{{device.status}}</td>
             <td class="text-center">
               <button ng-click="viewDeviceData(device)" tooltip="View latest device data" tooltip-popup-delay="500" class="btn btn-default icon"><i class="glyphicon glyphicon-signal"></i></button>
@@ -26,10 +26,10 @@
             <td class="text-center">
               <button ng-click="editDeviceModal(device)" tooltip="Edit device name" tooltip-popup-delay="500" class="btn btn-default icon"><i class="glyphicon glyphicon-pencil"></i></button>
             </td>
-            <td class="text-center">
+<!--             <td class="text-center">
               <button ng-click="settingsModal(device)" tooltip="Edit device thresholds and settings" tooltip-popup-delay="500" class="btn btn-default icon"><i class="glyphicon glyphicon glyphicon-cog"></i></button>
             </td>
-            <td class="text-center">
+ -->            <td class="text-center">
               <button ng-click="remove(device)" tooltip="Delete device" tooltip-popup-delay="500" class="btn btn-default icon"><i class="glyphicon glyphicon-trash"></i></button>
             </td>
           </tr>

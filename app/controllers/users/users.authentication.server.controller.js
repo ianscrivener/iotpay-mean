@@ -9,6 +9,39 @@ var _ = require('lodash'),
 	passport = require('passport'),
 	User = mongoose.model('User');
 
+
+/**
+ * Check and create customer 
+ */
+
+exports.createCustomer = function(req, res) {
+	User.findOne({email: req.body.email}).exec(function(err, user) {
+		if(err) {
+			console.log(err);
+		}
+		if(!user) {
+			var newUser = new User(req.body);
+			newUser.provider = 'local';
+			newUser.firstName = 'temp';
+			newUser.lastName = 'temp';
+			newUser.username = req.body.email;
+			newUser.password = 'Password';
+			newUser.save(function(err) {
+				if (err) {
+					console.log(err);
+					return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				} else {
+					res.jsonp(newUser);
+				}
+			});	
+		} else {
+			res.jsonp(user);
+		}
+	});
+};
+
 /**
  * Signup
  */

@@ -315,18 +315,32 @@ angular.module('devices').controller('DevicesController', ['$scope', '$http', '$
         templateUrl: '/modules/devices/views/create.modal.client.view.html',
         controller: 'DevicesController'
       });
-      modalInstance.result.then(function(name) {
-				var device = new Devices ({
-					name: name
-				});
-				device.$save(function(response) {
-					$scope.devices.push(response);
+      modalInstance.result.then(function(data) {
+        var name = data[0];
+        var customerEmail = data[1];
+        var customerMobile = data[2];
 
-					// Clear form fields
-					$scope.name = '';
-				}, function(errorResponse) {
-					$scope.error = errorResponse.data.message;
-				});
+        $http({
+          method: 'POST',
+          url: '/users/createCustomer',
+          data: {
+            email: customerEmail,
+            mobile: customerMobile
+          }
+        }).success(function(customer) {
+          var device = new Devices ({
+            name: name,
+            customer: customer._id
+          });
+          device.$save(function(response) {
+            $scope.devices.push(response);
+
+            // Clear form fields
+            $scope.name = '';
+          }, function(errorResponse) {
+            $scope.error = errorResponse.data.message;
+          });
+        });
       }, function() {
       });
 		};

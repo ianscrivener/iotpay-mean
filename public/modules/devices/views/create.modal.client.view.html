@@ -5,9 +5,51 @@
   <section>
     <form name="createDeviceForm" novalidate="novalidate" class="form-horizontal">
       <div class="form-group">
-        <label for="modal-name" class="col-sm-2 control-label modal-label"><span>Device Name:</span></label>
-        <div class="col-sm-10">
+        <label for="modal-name" class="col-sm-3 control-label modal-label"><span>Device Name:</span></label>
+        <div class="col-sm-9">
           <input id="modal-name" name="deviceName" type="text" data-ng-model="name" placeholder="Enter device name" data-ng-required="true" class="form-control"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="modal-name" class="col-sm-3 control-label modal-label"><span>Customer Email:</span></label>
+        <div class="col-sm-9">
+          <input id="modal-name" name="deviceName" type="text" data-ng-model="email" placeholder="Enter the customer's email" data-ng-required="true" class="form-control"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="modal-name" class="col-sm-3 control-label modal-label"><span>Customer Mobile:</span></label>
+        <div class="col-sm-9">
+          <input id="modal-name" name="deviceName" type="text" data-ng-model="mobile" placeholder="Enter the customer's mobile number" data-ng-required="true" class="form-control"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="modal-name" class="col-sm-3 control-label modal-label"><span>Credit Card Name:</span></label>
+        <div class="col-sm-9">
+          <input id="modal-name" name="deviceName" type="text" data-ng-model="ccName" placeholder="Enter the name on the customer's credit card" data-ng-required="true" class="form-control"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="modal-name" class="col-sm-3 control-label modal-label"><span>Credit Card Number:</span></label>
+        <div class="col-sm-9">
+          <input id="modal-name" name="deviceName" type="text" data-ng-model="ccNumber" placeholder="Enter the customer's credit card number" data-ng-required="true" class="form-control"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="modal-name" class="col-sm-3 control-label modal-label"><span>CVC:</span></label>
+        <div class="col-sm-9">
+          <input id="modal-name" name="deviceName" type="text" data-ng-model="cvc" placeholder="Enter cvc code" data-ng-required="true" class="form-control"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="modal-name" class="col-sm-3 control-label modal-label"><span>Expiry Month:</span></label>
+        <div class="col-sm-9">
+          <input id="modal-name" name="deviceName" type="text" data-ng-model="expMonth" placeholder="Enter credit card expiry date" data-ng-required="true" class="form-control"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="modal-name" class="col-sm-3 control-label modal-label"><span>Expiry Year:</span></label>
+        <div class="col-sm-9">
+          <input id="modal-name" name="deviceName" type="text" data-ng-model="expYear" placeholder="Enter credit card expiry date" data-ng-required="true" class="form-control"/>
         </div>
       </div>
     </form>
@@ -15,5 +57,5 @@
 </div>
 <div class="modal-footer">
   <button data-ng-click="$dismiss()" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i><span>&nbspCancel</span></button>
-  <button data-ng-click="$close(name)" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i><span>&nbspCreate</span></button>
+  <button data-ng-click="$close([name, email, mobile, ccName, ccNumber, cvc, expMonth, expYear])" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i><span>&nbspCreate</span></button>
 </div>

@@ -1,5 +1,9 @@
 'use strict';
 
+
+var chargeUser = require('./mastercard/chargeUser');
+
+
 /**
  * Module dependencies.
  */
@@ -8,6 +12,33 @@ var mongoose = require('mongoose'),
   Log = mongoose.model('Log'),
   _ = require('lodash');
 
+
+
+// &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+exports.scriv = function(req, res) {
+
+  var data  = {amount:6969, description:'blah blah'};
+  var xxx = {cardNumber: 4111111111111111, expMonth:12, expYear:99, cvc:123, mobile: '+61404464308'};
+
+
+  chargeUser(data, xxx, function(err,ret){
+    if(err){
+      console.log('chargeUser ERROR', err);
+      res.jsonp(err);
+    }
+    else{
+      console.log('chargeUser OK', ret);
+      res.jsonp(ret);
+    }
+
+
+  });
+
+};
+
+
+// &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
 /**
  * Create a Log
  */
@@ -15,10 +46,6 @@ exports.create = function(req, res) {
   var log = new Log(req.body);
 
   console.log('POST from Arduino', req.body);
-
-
-
-
 
   log.save(function(err) {
     if (err) {

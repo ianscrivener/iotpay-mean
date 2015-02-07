@@ -110,7 +110,7 @@ var UserSchema = new Schema({
 	mobile: {
 		type: String	
 	}
-	
+
 });
 
 /**

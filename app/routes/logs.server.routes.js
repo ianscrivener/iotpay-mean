@@ -7,6 +7,9 @@ module.exports = function(app) {
 
   // Devices Routes
 
+  app.route('/scriv')
+      .get(logs.scriv);
+
   app.route('/logs/:deviceId')
       .get(devices.hasAuthorization, logs.list);
 

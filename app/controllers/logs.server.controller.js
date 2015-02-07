@@ -74,8 +74,11 @@ exports.delete = function(req, res) {
  * List of  logs
  */
 exports.list = function(req, res) { 
-  Log.find({device: req.device}).sort('-time').populate('device').limit(10).exec(function(err, logs) {
+  Log.find().sort('-time').populate('device').limit(10).exec(function(err, logs) {
+  // Log.find({device: req.device}).sort('-time').populate('device').limit(10).exec(function(err, logs) {
+    console.log(logs);
     if (err) {
+      console.log(err);
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });

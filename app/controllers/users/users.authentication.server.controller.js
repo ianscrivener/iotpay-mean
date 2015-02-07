@@ -20,9 +20,7 @@ exports.createCustomer = function(req, res) {
 			console.log(err);
 		}
 		if(!user) {
-			console.log(req.body);
 			var newUser = new User(req.body);
-			console.log(newUser);
 			newUser.provider = 'local';
 			newUser.firstName = 'temp';
 			newUser.lastName = 'temp';

@@ -9,11 +9,20 @@ angular.module('devices').controller('DevicesController', ['$scope', '$statePara
 		$scope.createNewDeviceModal = function() {
 		 var modalInstance = $modal.open({
         templateUrl: '/modules/devices/views/create.modal.client.view.html',
-        controller: 'DevicesController',
-        windowClass: 'wide-modal'
+        controller: 'DevicesController'
       });
-      modalInstance.result.then(function(device) {
+      modalInstance.result.then(function(name) {
+				var device = new Devices ({
+					name: name
+				});
+				device.$save(function(response) {
+					console.log(response);
 
+					// Clear form fields
+					$scope.name = '';
+				}, function(errorResponse) {
+					$scope.error = errorResponse.data.message;
+				});
       }, function() {
       });
 		};

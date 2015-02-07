@@ -27,3 +27,12 @@ a {
   border-bottom: none;
   margin-top: 30px;
 }
+
+.modal-dialog {
+  width: 900px;
+}
+
+.modal-backdrop {
+  bottom: 0;
+  position: fixed;
+}

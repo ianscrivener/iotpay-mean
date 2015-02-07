@@ -18,13 +18,14 @@ var mongoose = require('mongoose'),
 exports.scriv = function(req, res) {
 
   var data  = {amount:6969, description:'blah blah'};
-  var xxx = {cardNumber: 4111111111111111, expMonth:12, expYear:99, cvc:123, mobile: '+61404464308'};
+  var cust = {cardNumber: 4111111111111111, expMonth:12, expYear:99, cvc:123, mobile: '+61404464308'};
 
 
-  chargeUser(data, xxx, function(err,ret){
+  chargeUser(data, cust, function(err,ret){
     if(err){
       console.log('chargeUser ERROR', err);
       res.jsonp(err);
+
     }
     else{
       console.log('chargeUser OK', ret);

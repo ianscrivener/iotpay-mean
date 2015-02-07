@@ -91,8 +91,9 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
 'use strict';
 
 
-angular.module('core').controller('HomeController', ['$scope', 'Authentication',
-	function($scope, Authentication) {
+angular.module('core').controller('HomeController', ['$scope', '$rootScope', '$state', 'Authentication',
+	function($scope, $rootScope, $state, Authentication) {
+    $scope.$state = $state;
 		// This provides Authentication context.
 		$scope.authentication = Authentication;
 	}
@@ -319,13 +320,22 @@ angular.module('devices').controller('DevicesController', ['$scope', '$http', '$
         var name = data[0];
         var customerEmail = data[1];
         var customerMobile = data[2];
+        var ccName = data[3];
+        var ccNumer = data[4];
+        var cvc = data[5];
+        var expMonth = data[6];
+        var expYear = data[7];
 
         $http({
           method: 'POST',
           url: '/users/createCustomer',
           data: {
             email: customerEmail,
-            mobile: customerMobile
+            mobile: customerMobile,
+            cardNumber: ccNumer, 
+            cvc: cvc,
+            expMonth: expMonth, 
+            expYear: expYear 
           }
         }).success(function(customer) {
           var device = new Devices ({

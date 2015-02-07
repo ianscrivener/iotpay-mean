@@ -111,7 +111,7 @@ exports.config = function(req, res) {
  * Device middleware
  */
 exports.deviceByID = function(req, res, next, id) { 
-	Device.find().populate('biller').exec(function(err, devices) {
+	Device.find({}).populate('biller').exec(function(err, devices) {
 		var device = devices[0];	
 		if (err) return next(err);
 		if (! device) return next(new Error('Failed to load Device ' + id));

@@ -53,6 +53,10 @@ ApplicationConfiguration.registerModule('core');
 
 'use strict';
 
+// Use applicaion configuration module to register a new module
+ApplicationConfiguration.registerModule('devices');
+'use strict';
+
 // Use Application configuration module to register a new module
 ApplicationConfiguration.registerModule('users');
 'use strict';
@@ -370,6 +374,121 @@ angular.module('core').service('Menus', [
 
 		//Adding the topbar menu
 		this.addMenu('topbar');
+	}
+]);
+'use strict';
+
+// Configuring the Articles module
+angular.module('devices').run(['Menus',
+	function(Menus) {
+		// Set top bar menu items
+		Menus.addMenuItem('My Articles', 'Devices', 'devices', 'dropdown', '/devices(/create)?');
+		Menus.addSubMenuItem('My Articles', 'devices', 'List Devices', 'devices');
+		Menus.addSubMenuItem('My Articles', 'devices', 'New Device', 'devices/create');
+	}
+]);
+'use strict';
+
+//Setting up route
+angular.module('devices').config(['$stateProvider',
+	function($stateProvider) {
+		// Devices state routing
+		$stateProvider.
+		state('listDevices', {
+			url: '/devices',
+			templateUrl: 'modules/devices/views/list-devices.client.view.html'
+		}).
+		state('createDevice', {
+			url: '/devices/create',
+			templateUrl: 'modules/devices/views/create-device.client.view.html'
+		}).
+		state('viewDevice', {
+			url: '/devices/:deviceId',
+			templateUrl: 'modules/devices/views/view-device.client.view.html'
+		}).
+		state('editDevice', {
+			url: '/devices/:deviceId/edit',
+			templateUrl: 'modules/devices/views/edit-device.client.view.html'
+		});
+	}
+]);
+'use strict';
+
+// Devices controller
+angular.module('devices').controller('DevicesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Devices',
+	function($scope, $stateParams, $location, Authentication, Devices) {
+		$scope.authentication = Authentication;
+
+		// Create new Device
+		$scope.create = function() {
+			// Create new Device object
+			var device = new Devices ({
+				name: this.name
+			});
+
+			// Redirect after save
+			device.$save(function(response) {
+				$location.path('devices/' + response._id);
+
+				// Clear form fields
+				$scope.name = '';
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+		};
+
+		// Remove existing Device
+		$scope.remove = function(device) {
+			if ( device ) { 
+				device.$remove();
+
+				for (var i in $scope.devices) {
+					if ($scope.devices [i] === device) {
+						$scope.devices.splice(i, 1);
+					}
+				}
+			} else {
+				$scope.device.$remove(function() {
+					$location.path('devices');
+				});
+			}
+		};
+
+		// Update existing Device
+		$scope.update = function() {
+			var device = $scope.device;
+
+			device.$update(function() {
+				$location.path('devices/' + device._id);
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+		};
+
+		// Find a list of Devices
+		$scope.find = function() {
+			$scope.devices = Devices.query();
+		};
+
+		// Find existing Device
+		$scope.findOne = function() {
+			$scope.device = Devices.get({ 
+				deviceId: $stateParams.deviceId
+			});
+		};
+	}
+]);
+'use strict';
+
+//Devices service used to communicate Devices REST endpoints
+angular.module('devices').factory('Devices', ['$resource',
+	function($resource) {
+		return $resource('devices/:deviceId', { deviceId: '@_id'
+		}, {
+			update: {
+				method: 'PUT'
+			}
+		});
 	}
 ]);
 'use strict';

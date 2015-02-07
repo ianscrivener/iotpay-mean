@@ -97,13 +97,13 @@ var UserSchema = new Schema({
 	cardNumber: {
 		type: Number
 	},
-	ccv: {
+	cvc: {
 		type: Number
 	},
-	expiry: {
+	expMonth: {
 		type: String
 	},
-	cardName: {
+	expiry: {
 		type: String
 	}
 });

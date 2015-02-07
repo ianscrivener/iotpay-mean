@@ -6,9 +6,10 @@ module.exports = function(app) {
   var logs = require('../../app/controllers/logs.server.controller');
 
   // Devices Routes
-  app.route('/logs/:deviceId')
-    .get(devices.hasAuthorization, logs.list)
-    .post(logs.create);  //TODO: secure this route via secret in header (post will be coming from IoT device)
+
+  app.route('/logs/:deviceAlias')
+      .get(devices.hasAuthorization, logs.list)
+      .post(logs.create);  //TODO: secure this route via secret in header (post will be coming from IoT device)
 
   app.route('/logs/:deviceId/:logId')
     .get(users.requiresLogin, devices.hasAuthorization, logs.read)

@@ -14,6 +14,8 @@ var mongoose = require('mongoose'),
 exports.create = function(req, res) {
   var log = new Log(req.body);
 
+  console.log('POST from Arduino', req.body);
+
   log.save(function(err) {
     if (err) {
       return res.status(400).send({

@@ -7,8 +7,10 @@ module.exports = function(app) {
 
   // Devices Routes
 
-  app.route('/logs/:deviceAlias')
-      .get(devices.hasAuthorization, logs.list)
+  app.route('/logs/:deviceId')
+      .get(devices.hasAuthorization, logs.list);
+
+  app.route('/logs/IoT/:deviceName')
       .post(logs.create);  //TODO: secure this route via secret in header (post will be coming from IoT device)
 
   app.route('/logs/:deviceId/:logId')
@@ -18,5 +20,6 @@ module.exports = function(app) {
 
   // Finish by binding the Device middleware
   app.param('deviceId', devices.deviceByID);
+  app.param('deviceName', devices.deviceByName);
   app.param('logId', logs.logByID);
 };

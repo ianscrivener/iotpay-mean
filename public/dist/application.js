@@ -44,11 +44,6 @@ angular.element(document).ready(function() {
 'use strict';
 
 // Use Application configuration module to register a new module
-ApplicationConfiguration.registerModule('articles');
-
-'use strict';
-
-// Use Application configuration module to register a new module
 ApplicationConfiguration.registerModule('core');
 
 'use strict';
@@ -59,114 +54,6 @@ ApplicationConfiguration.registerModule('devices');
 
 // Use Application configuration module to register a new module
 ApplicationConfiguration.registerModule('users');
-'use strict';
-
-// Configuring the Articles module
-angular.module('articles').run(['Menus',
-	function(Menus) {
-		// Set top bar menu items
-		Menus.addMenuItem('topbar', 'Articles', 'articles', 'dropdown', '/articles(/create)?');
-		Menus.addSubMenuItem('topbar', 'articles', 'List Articles', 'articles');
-		Menus.addSubMenuItem('topbar', 'articles', 'New Article', 'articles/create');
-	}
-]);
-'use strict';
-
-// Setting up route
-angular.module('articles').config(['$stateProvider',
-	function($stateProvider) {
-		// Articles state routing
-		$stateProvider.
-		state('listArticles', {
-			url: '/articles',
-			templateUrl: 'modules/articles/views/list-articles.client.view.html'
-		}).
-		state('createArticle', {
-			url: '/articles/create',
-			templateUrl: 'modules/articles/views/create-article.client.view.html'
-		}).
-		state('viewArticle', {
-			url: '/articles/:articleId',
-			templateUrl: 'modules/articles/views/view-article.client.view.html'
-		}).
-		state('editArticle', {
-			url: '/articles/:articleId/edit',
-			templateUrl: 'modules/articles/views/edit-article.client.view.html'
-		});
-	}
-]);
-'use strict';
-
-angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles',
-	function($scope, $stateParams, $location, Authentication, Articles) {
-		$scope.authentication = Authentication;
-
-		$scope.create = function() {
-			var article = new Articles({
-				title: this.title,
-				content: this.content
-			});
-			article.$save(function(response) {
-				$location.path('articles/' + response._id);
-
-				$scope.title = '';
-				$scope.content = '';
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
-		};
-
-		$scope.remove = function(article) {
-			if (article) {
-				article.$remove();
-
-				for (var i in $scope.articles) {
-					if ($scope.articles[i] === article) {
-						$scope.articles.splice(i, 1);
-					}
-				}
-			} else {
-				$scope.article.$remove(function() {
-					$location.path('articles');
-				});
-			}
-		};
-
-		$scope.update = function() {
-			var article = $scope.article;
-
-			article.$update(function() {
-				$location.path('articles/' + article._id);
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
-		};
-
-		$scope.find = function() {
-			$scope.articles = Articles.query();
-		};
-
-		$scope.findOne = function() {
-			$scope.article = Articles.get({
-				articleId: $stateParams.articleId
-			});
-		};
-	}
-]);
-'use strict';
-
-//Articles service used for communicating with the articles REST endpoints
-angular.module('articles').factory('Articles', ['$resource',
-	function($resource) {
-		return $resource('articles/:articleId', {
-			articleId: '@_id'
-		}, {
-			update: {
-				method: 'PUT'
-			}
-		});
-	}
-]);
 'use strict';
 
 // Setting up route
@@ -204,8 +91,9 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
 'use strict';
 
 
-angular.module('core').controller('HomeController', ['$scope', 'Authentication',
-	function($scope, Authentication) {
+angular.module('core').controller('HomeController', ['$scope', '$rootScope', '$state', 'Authentication',
+	function($scope, $rootScope, $state, Authentication) {
+    $scope.$state = $state;
 		// This provides Authentication context.
 		$scope.authentication = Authentication;
 	}
@@ -382,9 +270,7 @@ angular.module('core').service('Menus', [
 angular.module('devices').run(['Menus',
 	function(Menus) {
 		// Set top bar menu items
-		Menus.addMenuItem('My Articles', 'Devices', 'devices', 'dropdown', '/devices(/create)?');
-		Menus.addSubMenuItem('My Articles', 'devices', 'List Devices', 'devices');
-		Menus.addSubMenuItem('My Articles', 'devices', 'New Device', 'devices/create');
+		Menus.addMenuItem('topbar', 'My Devices', 'devices', 'item', '/devices(/create)?');
 	}
 ]);
 'use strict';
@@ -398,43 +284,98 @@ angular.module('devices').config(['$stateProvider',
 			url: '/devices',
 			templateUrl: 'modules/devices/views/list-devices.client.view.html'
 		}).
-		state('createDevice', {
-			url: '/devices/create',
-			templateUrl: 'modules/devices/views/create-device.client.view.html'
-		}).
-		state('viewDevice', {
+		state('viewDeviceData', {
 			url: '/devices/:deviceId',
-			templateUrl: 'modules/devices/views/view-device.client.view.html'
-		}).
-		state('editDevice', {
-			url: '/devices/:deviceId/edit',
-			templateUrl: 'modules/devices/views/edit-device.client.view.html'
+			templateUrl: 'modules/devices/views/data-devices.client.view.html'
 		});
 	}
 ]);
 'use strict';
 
 // Devices controller
-angular.module('devices').controller('DevicesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Devices',
-	function($scope, $stateParams, $location, Authentication, Devices) {
+angular.module('devices').controller('DevicesController', ['$scope', '$http', '$stateParams', '$location', '$modal', 'Authentication', 'Devices',
+	function($scope, $http, $stateParams, $location, $modal, Authentication, Devices) {
 		$scope.authentication = Authentication;
 
-		// Create new Device
-		$scope.create = function() {
-			// Create new Device object
-			var device = new Devices ({
-				name: this.name
-			});
 
-			// Redirect after save
-			device.$save(function(response) {
-				$location.path('devices/' + response._id);
+		$scope.viewDeviceData = function(device) {
+			$location.path('devices/' + device._id);
+		};
 
-				// Clear form fields
-				$scope.name = '';
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
+		$scope.findOneLog = function() {
+			$http({
+        method: 'GET',
+        url: '/logs/' + $stateParams.deviceId,
+      }).success(function(logs) {
+        $scope.log = logs[0];
+      });
+		};
+
+		$scope.createNewDeviceModal = function() {
+		 var modalInstance = $modal.open({
+        templateUrl: '/modules/devices/views/create.modal.client.view.html',
+        controller: 'DevicesController'
+      });
+      modalInstance.result.then(function(data) {
+        var name = data[0];
+        var customerEmail = data[1];
+        var customerMobile = data[2];
+        var ccName = data[3];
+        var ccNumer = data[4];
+        var cvc = data[5];
+        var expMonth = data[6];
+        var expYear = data[7];
+
+        $http({
+          method: 'POST',
+          url: '/users/createCustomer',
+          data: {
+            email: customerEmail,
+            mobile: customerMobile,
+            cardNumber: ccNumer, 
+            cvc: cvc,
+            expMonth: expMonth, 
+            expYear: expYear 
+          }
+        }).success(function(customer) {
+          var device = new Devices ({
+            name: name,
+            customer: customer._id
+          });
+          device.$save(function(response) {
+            $scope.devices.push(response);
+
+            // Clear form fields
+            $scope.name = '';
+          }, function(errorResponse) {
+            $scope.error = errorResponse.data.message;
+          });
+        });
+      }, function() {
+      });
+		};
+
+		$scope.editDeviceModal = function(device) {
+			$scope.deviceCopy = angular.copy(device);
+		 	var modalInstance = $modal.open({
+        templateUrl: '/modules/devices/views/edit.modal.client.view.html',
+        controller: 'DevicesController',
+        scope: $scope
+      });
+      modalInstance.result.then(function(deviceCopy) {
+      	device = deviceCopy; 
+
+				device.$update(function(response) {
+					$scope.devices.forEach(function(device, i) {
+						if(device._id === response._id) {
+							$scope.devices[i] = response;
+						}
+					});
+				}, function(errorResponse) {
+					$scope.error = errorResponse.data.message;
+				});
+      }, function() {
+      });
 		};
 
 		// Remove existing Device
@@ -539,6 +480,10 @@ angular.module('users').config(['$stateProvider',
 		state('accounts', {
 			url: '/settings/accounts',
 			templateUrl: 'modules/users/views/settings/social-accounts.client.view.html'
+		}).
+		state('account', {
+			url: '/settings/account',
+			templateUrl: 'modules/users/views/settings/account.client.view.html'
 		}).
 		state('signup', {
 			url: '/signup',

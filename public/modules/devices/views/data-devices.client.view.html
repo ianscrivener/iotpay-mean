@@ -1,78 +1,41 @@
-<section data-ng-controller="DevicesController" data-ng-init="findOne()">
+<section data-ng-controller="DevicesController" data-ng-init="findOneLog()">
+  <div class="page-header">
+  </div>
   <div class="row">
-    <div class="col-sm-3">
-      <div class="panel panel-info">
-        <div class="panel-heading">
-          <div class="row">
-            <div class="text-center">
-              <h3>{{device.length | number}}</h3>
-              <h5 data-ng-if="responses.length==1">Respondent</h5>
-              <h5 data-ng-if="responses.length!=1">Respondents</h5>
-            </div>
-          </div>
-        </div><a data-ui-sref="surveys-edit.editTabs({editTabId: 'respondents', surveyId: survey._id})">
-          <div class="panel-footer">
-            <div class="row">
-              <div class="col-sm-9">Go to Respondents</div>
-              <div class="col-sm-3 text-right"><i class="icon-right-circled"></i></div>
-            </div>
-          </div></a>
-      </div>
-    </div>
-    <div class="col-sm-3">
-      <div class="panel panel-success">
-        <div class="panel-heading">
-          <div class="row">
-            <div class="text-center">
-              <h3>{{numberResponses | number}}</h3>
-              <h5 data-ng-if="numberResponses==1">Response Received</h5>
-              <h5 data-ng-if="numberResponses!=1">Responses Received</h5>
-            </div>
-          </div>
-        </div><a data-ui-sref="surveys-manage.manageTabs({manageTabId:'responses'})">
-          <div class="panel-footer">
-            <div class="row">
-              <div class="col-sm-9">View Responses</div>
-              <div class="col-sm-3 text-right"><i class="icon-right-circled"></i></div>
-            </div>
-          </div></a>
-      </div>
-    </div>
-    <div class="col-sm-3">
-      <div class="panel panel-warning">
-        <div class="panel-heading">
-          <div class="row">
-            <div class="text-center">
-              <h3>{{(100*numberResponses/responses.length)| number:0}}%</h3>
-              <h5>Response Rate</h5>
-            </div>
-          </div>
-        </div><a data-ui-sref="surveys-manage.manageTabs({manageTabId:'sendEmails'})">
-          <div class="panel-footer">
-            <div class="row">
-              <div class="col-sm-9">Send Emails</div>
-              <div class="col-sm-3 text-right"><i class="icon-right-circled"></i></div>
-            </div>
-          </div></a>
-      </div>
-    </div>
-    <div class="col-sm-3">
+    <div class="col-sm-4">
       <div class="panel panel-danger">
         <div class="panel-heading">
           <div class="row">
             <div class="text-center">
-              <h3>{{numberBounces | number}}</h3>
-              <h5 data-ng-if="numberBounces==1">Bounced Address</h5>
-              <h5 data-ng-if="numberBounces!=1">Bounced Addresses</h5>
+              <h3>{{log.percExceeded | number:0}}%</h3>
+              <h5 >Exceeded</h5>
             </div>
           </div>
         </div><a data-ui-sref="surveys-edit.editTabs({editTabId: 'respondents', surveyId: survey._id})">
-          <div class="panel-footer">
-            <div class="row">
-              <div class="col-sm-9">Edit Addresses</div>
-              <div class="col-sm-3 text-right"><i class="icon-right-circled"></i></div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="panel panel-warning">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="text-center">
+              <h3>{{log.percWarn | number:0}}%</h3>
+              <h5 >Warning</h5>
             </div>
-          </div></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="panel panel-success">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="text-center">
+              <h3>{{log.percUnder| number:0}}%</h3>
+              <h5>OK</h5>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -1,28 +1,64 @@
 'use strict';
 
 // Devices controller
-angular.module('devices').controller('DevicesController', ['$scope', '$stateParams', '$location', '$modal', 'Authentication', 'Devices',
-	function($scope, $stateParams, $location, $modal, Authentication, Devices) {
+angular.module('devices').controller('DevicesController', ['$scope', '$http', '$stateParams', '$location', '$modal', 'Authentication', 'Devices',
+	function($scope, $http, $stateParams, $location, $modal, Authentication, Devices) {
 		$scope.authentication = Authentication;
 
+
+		$scope.viewDeviceData = function(device) {
+			$location.path('devices/' + device._id);
+		};
+
+		$scope.findOneLog = function() {
+			$http({
+        method: 'GET',
+        url: '/logs/' + $stateParams.deviceId,
+      }).success(function(logs) {
+        $scope.log = logs[0];
+      });
+		};
 
 		$scope.createNewDeviceModal = function() {
 		 var modalInstance = $modal.open({
         templateUrl: '/modules/devices/views/create.modal.client.view.html',
         controller: 'DevicesController'
       });
-      modalInstance.result.then(function(name) {
-				var device = new Devices ({
-					name: name
-				});
-				device.$save(function(response) {
-					$scope.devices.push(response);
+      modalInstance.result.then(function(data) {
+        var name = data[0];
+        var customerEmail = data[1];
+        var customerMobile = data[2];
+        var ccName = data[3];
+        var ccNumer = data[4];
+        var cvc = data[5];
+        var expMonth = data[6];
+        var expYear = data[7];
 
-					// Clear form fields
-					$scope.name = '';
-				}, function(errorResponse) {
-					$scope.error = errorResponse.data.message;
-				});
+        $http({
+          method: 'POST',
+          url: '/users/createCustomer',
+          data: {
+            email: customerEmail,
+            mobile: customerMobile,
+            cardNumber: ccNumer, 
+            cvc: cvc,
+            expMonth: expMonth, 
+            expYear: expYear 
+          }
+        }).success(function(customer) {
+          var device = new Devices ({
+            name: name,
+            customer: customer._id
+          });
+          device.$save(function(response) {
+            $scope.devices.push(response);
+
+            // Clear form fields
+            $scope.name = '';
+          }, function(errorResponse) {
+            $scope.error = errorResponse.data.message;
+          });
+        });
       }, function() {
       });
 		};

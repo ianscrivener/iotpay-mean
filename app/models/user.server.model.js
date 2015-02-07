@@ -43,6 +43,7 @@ var UserSchema = new Schema({
 	},
 	email: {
 		type: String,
+		uinque: 'Email already exists',
 		trim: true,
 		default: '',
 		validate: [validateLocalStrategyProperty, 'Please fill in your email'],
@@ -107,11 +108,9 @@ var UserSchema = new Schema({
 		type: String
 	},
 	mobile: {
-		type: String
+		type: String	
 	}
-
-
-
+	
 });
 
 /**

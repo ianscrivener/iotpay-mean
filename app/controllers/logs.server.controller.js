@@ -41,7 +41,8 @@ exports.create = function(req, res) {
   var log = new Log(req.body);
   var device = req.device;
   console.log(device);
-  var customer = req.device.customer;
+  var customer = device.customer;
+  console.log(customer);
 
   console.log('POST from Arduino', req.body);
 

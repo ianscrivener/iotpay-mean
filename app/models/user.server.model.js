@@ -88,6 +88,11 @@ var UserSchema = new Schema({
 	},
 	resetPasswordExpires: {
 		type: Date
+	},
+	type: {
+		type: String,
+		enum: ['Admin', 'Customer', 'Biller'],
+		default: 'Customer'
 	}
 });
 

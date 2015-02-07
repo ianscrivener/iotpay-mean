@@ -20,9 +20,31 @@ var DeviceSchema = new Schema({
 		type: Date,
 		default: Date.now
 	},
-	user: {
+	biller: {
 		type: Schema.ObjectId,
 		ref: 'User'
+	},
+	customer: {
+		type: Schema.ObjectId,
+		ref: 'User'
+	},
+	config: {
+		dataPeriod: {
+			type: Number,
+			default: 1
+		},
+		configPeriod: {
+			type: Number,
+			default: 5
+		},
+		thresholdWarn: {
+			type: Number,
+			default: 65
+		},
+		thresholdLimit: {
+			type: Number,
+			default: 75
+		}
 	}
 });
 

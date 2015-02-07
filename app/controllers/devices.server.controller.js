@@ -85,6 +85,29 @@ exports.list = function(req, res) {
 };
 
 /**
+ * Get Device Config
+ */
+exports.config = function(req, res) { 
+	res.jsonp({
+		dataPeriod: 1,
+		configPeriod: 5,
+		thresholdWarn: 65,
+		thresholdLimit: 73
+	});
+
+	// Device.find().sort('-created').populate('user', 'displayName').exec(function(err, devices) {
+	// 	if (err) {
+	// 		return res.status(400).send({
+	// 			message: errorHandler.getErrorMessage(err)
+	// 		});
+	// 	} else {
+	// 		res.jsonp(devices);
+	// 	}
+	// });
+};
+
+
+/**
  * Device middleware
  */
 exports.deviceByID = function(req, res, next, id) { 

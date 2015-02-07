@@ -9,7 +9,7 @@ var mongoose = require('mongoose'),
 /**
  * Payments Schema
  */
-var PaymentsSchema = new Schema({
+var PaymentSchema = new Schema({
 
 });
 

@@ -6,6 +6,4 @@ module.exports = function(app) {
 
   //To Come 
 
-  // Finish by binding the Device middleware
-  app.param('deviceId', devices.deviceByID);
 };

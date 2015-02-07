@@ -18,13 +18,13 @@ var LogSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'Device'
   },
-  percExceeded {
+  percExceeded: {
     type: Number
   }, 
-  percWarn {
+  percWarn: {
     type: Number
   }, 
-  percUnder {
+  percUnder: {
     type: Number
   } 
 });

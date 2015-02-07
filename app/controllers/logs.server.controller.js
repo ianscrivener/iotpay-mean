@@ -72,7 +72,7 @@ exports.delete = function(req, res) {
  * List of  logs
  */
 exports.list = function(req, res) { 
-  Log.find().sort('-created').populate('user', 'displayName').exec(function(err, logs) {
+  Log.find({device: req.device}).sort('-time').populate('device').exec(function(err, logs) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
@@ -80,5 +80,17 @@ exports.list = function(req, res) {
     } else {
       res.jsonp(logs);
     }
+  });
+};
+
+/**
+ * Log middleware
+ */
+exports.logByID = function(req, res, next, id) { 
+  Log.findById(id).populate('device').exec(function(err, log) {
+    if (err) return next(err);
+    if (! log) return next(new Error('Failed to load Log ' + id));
+    req.log = log;
+    next();
   });
 };

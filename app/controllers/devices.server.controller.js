@@ -53,7 +53,7 @@ exports.update = function(req, res) {
 };
 
 /**
- * Delete an Device
+ * Delete a Device
  */
 exports.delete = function(req, res) {
 	var device = req.device ;

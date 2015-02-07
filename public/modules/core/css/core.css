@@ -22,3 +22,8 @@ body.ng-cloak
 a {
   cursor: pointer;
 }
+
+.page-header {
+  border-bottom: none;
+  margin-top: 30px;
+}

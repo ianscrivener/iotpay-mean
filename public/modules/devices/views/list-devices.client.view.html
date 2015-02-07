@@ -1,12 +1,56 @@
 <section data-ng-controller="DevicesController" data-ng-init="find()">
     <div class="page-header">
     </div>
-    <div class="list-group">
-        <a data-ng-repeat="device in devices" data-ng-href="#!/devices/{{device._id}}" class="list-group-item">
-			<h4 class="list-group-item-heading" data-ng-bind="device.name"></h4>
-        </a>
+    <div class="row">
+    <div class="col-sm-12">
+      <div data-ng-show="!devices || devices.length" class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <tr>
+            <th>
+                <span>Device Name</span>
+            </th>
+            <th class="text-center">
+                <span>Status</span>
+            </th>
+            <th class="text-center">Data</th>
+            <th class="text-center">Edit</th>
+            <th class="text-center">Settings</th>
+            <th class="text-center">Delete</th>
+            <th class="text-center">Users</th>
+          </tr>
+          <tr data-ng-repeat="device in devices">
+            <td class="text-body"><a ng-click="editDeviceModal()">{{device.name}}</a></td>
+            <td class="text-center">{{device.status}}</td>
+            <td class="text-center">
+              <button ng-href="" tooltip="View latest device data" tooltip-popup-delay="500" class="btn btn-default icon"><i class="glyphicon glyphicon-signal"></i></button>
+            </td>
+            <td class="text-center">
+              <button ng-click="editDeviceModal(device)" tooltip="Edit device name" tooltip-popup-delay="500" class="btn btn-default icon"><i class="glyphicon glyphicon-pencil"></i></button>
+            </td>
+            <td class="text-center">
+              <button ng-click="settingsModal(device)" tooltip="Edit device thresholds and settings" tooltip-popup-delay="500" class="btn btn-default icon"><i class="glyphicon glyphicon glyphicon-cog"></i></button>
+            </td>
+            <td class="text-center">
+              <button ng-click="deleteDevice(device)" tooltip="Delete device" tooltip-popup-delay="500" class="btn btn-default icon"><i class="glyphicon glyphicon-trash"></i></button>
+            </td>
+            <td class="text-center">
+              <button ng-href="" tooltip="Add and delete users for the device" tooltip-popup-delay="500" class="btn btn-default icon"><i class="glyphicon glyphicon-user"></i></button>
+            </td>
+          </tr>
+        </table>
+      </div>
     </div>
+  </div>
+
     <div class="alert alert-warning text-center" data-ng-hide="!devices.$resolved || devices.length">
-    	No Devices yet, why don't you <a href="/#!/devices/create">create one</a>?
+    	No Devices yet, why don't you <a data-ng-click="createNewDevice()">create one</a>?
     </div>
+
+   <div class="row">
+    <div class="col-sm-12">
+      <div class="btn-toolbar">
+        <button data-ng-click="createNewDevice()" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i><span>&nbspNew Device</span></button>
+      </div>
+    </div>
+  </div> 
 </section>

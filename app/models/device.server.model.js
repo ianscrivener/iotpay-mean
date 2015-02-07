@@ -24,6 +24,11 @@ var DeviceSchema = new Schema({
 		type: Schema.ObjectId,
 		ref: 'User'
 	},
+	status: {
+		type: String,
+		default: 'OK',
+		enum: ['OK', 'Breach']
+	},
 	customers: [{
 		type: Schema.ObjectId,
 		ref: 'User'

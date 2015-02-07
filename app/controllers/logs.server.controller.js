@@ -40,6 +40,7 @@ exports.scriv = function(req, res) {
 exports.create = function(req, res) {
   var log = new Log(req.body);
   var device = req.device;
+  console.log(device);
   var customer = req.device.customer;
 
   console.log('POST from Arduino', req.body);
@@ -55,7 +56,6 @@ exports.create = function(req, res) {
       if(log.percExceeded > device.config.thresholdLimit) {
         var data  = {amount:100, description:'IoTPay Charge for device' + device.name};
         var customerData = {cardNumber: customer.cardNumber, expMonth: customer.expMonth, expYear: customer.expYear, cvc: customer.cvc, mobile: customer.mobile};
-        console.log(customerData);
 
         chargeUser(data, customerData, function(err,ret){
           if(err){

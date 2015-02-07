@@ -123,7 +123,7 @@ exports.deviceByID = function(req, res, next, id) {
 };
 
 exports.deviceByName = function(req, res, next, name) { 
-	Device.findOne({name: name}).populate('biller customer').exec(function(err, device) {
+	Device.findOne({name: name}).populate('biller').populate('customer').exec(function(err, device) {
 		if(err) {
 			console.log(err);
 		}

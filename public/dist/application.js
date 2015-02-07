@@ -43,15 +43,17 @@ angular.element(document).ready(function() {
 });
 'use strict';
 
-// Use Applicaion configuration module to register a new module
+// Use Application configuration module to register a new module
 ApplicationConfiguration.registerModule('articles');
+
 'use strict';
 
-// Use Applicaion configuration module to register a new module
+// Use Application configuration module to register a new module
 ApplicationConfiguration.registerModule('core');
+
 'use strict';
 
-// Use Applicaion configuration module to register a new module
+// Use Application configuration module to register a new module
 ApplicationConfiguration.registerModule('users');
 'use strict';
 
@@ -597,17 +599,14 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 'use strict';
 
 // Authentication service for user variables
-angular.module('users').factory('Authentication', [
-	function() {
-		var _this = this;
+angular.module('users').factory('Authentication', ['$window', function($window) {
+	var auth = {
+		user: $window.user
+	};
+	
+	return auth;
+}]);
 
-		_this._data = {
-			user: window.user
-		};
-
-		return _this._data;
-	}
-]);
 'use strict';
 
 // Users service used for communicating with the users REST endpoint

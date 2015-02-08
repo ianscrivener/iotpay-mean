@@ -53,7 +53,7 @@
             <th class="text-center">OK</th>
           </tr>
           <tr data-ng-repeat="log in logs">
-            <td class="text-body"><a ng-click="editlogModal(log)">{{log.time | date:'medium'}}</a></td>
+            <td class="text-body">{{log.time | date:'medium'}}</td>
             <td class="text-center">{{log.percExceeded | number:0}}%</td>
             <td class="text-center">{{log.percWarn | number:0}}%</td>
             <td class="text-center">{{log.percUnder| number:0}}%</td>

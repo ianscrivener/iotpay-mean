@@ -302,6 +302,10 @@ angular.module('devices').controller('DevicesController', ['$scope', '$http', '$
 			$location.path('devices/' + device._id);
 		};
 
+    $scope.refreshData = function() {
+      $scope.devices = Devices.query();
+    };
+
 		$scope.findOneLog = function() {
 			$http({
         method: 'GET',

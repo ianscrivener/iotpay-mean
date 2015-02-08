@@ -54,7 +54,7 @@ exports.create = function(req, res) {
     } else {
 
       //Charge user logic - charge if the log percentage exceeded exceeds the threshold
-      if(log.percExceeded > 15) {
+      if(log.percExceeded > 4) {
       // if(log.percExceeded > device.config.thresholdLimit) {
         var data  = {amount:500, description: device.name};
         var customerData = {cardNumber: customer.cardNumber, expMonth: customer.expMonth, expYear: customer.expYear, cvc: customer.cvc, mobile: customer.mobile};

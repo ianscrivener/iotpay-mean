@@ -311,6 +311,8 @@ angular.module('devices').controller('DevicesController', ['$scope', '$http', '$
         method: 'GET',
         url: '/logs/' + $stateParams.deviceId,
       }).success(function(logs) {
+        console.log(logs);
+        $scope.logs = logs;
         $scope.log = logs[0];
       });
 		};

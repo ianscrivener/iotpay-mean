@@ -303,10 +303,7 @@ angular.module('devices').controller('DevicesController', ['$scope', '$http', '$
 		};
 
     $scope.refreshData = function() {
-      var tempDevices = Devices.query();      
-      tempDevices.forEach(function(tempDevice, i) {
-        $scope.devices[i].totalCharges = tempDevice.totalCharges;
-      });
+      $scope.devices = Devices.query();
     };
 
 		$scope.findOneLog = function() {

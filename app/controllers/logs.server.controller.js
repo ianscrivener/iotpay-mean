@@ -85,7 +85,8 @@ exports.create = function(req, res) {
         });
       } 
 
-      res.jsonp(log);
+      // here's the bug
+      //res.jsonp(log);
     }
   });
 };

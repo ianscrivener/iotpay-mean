@@ -83,10 +83,10 @@ exports.create = function(req, res) {
             });
           }
         });
-      } 
-
-      // here's the bug
-      //res.jsonp(log);
+      }
+      else {
+          res.jsonp(log);
+        }
     }
   });
 };

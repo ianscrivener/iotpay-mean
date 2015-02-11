@@ -2,12 +2,6 @@
 
 var async           = require('async');
 
-var accountSid      = 'ACa29ed645fd04299440653ee8ee1ae093';
-var authToken       = 'bd6a3712187f754f0ace1e95b0485706';
-var twilioClient    = require('twilio')(accountSid, authToken);
-
-
-
 var Simplify        = require('simplify-commerce');
 var simplifyClient  = Simplify.getClient(
                         {
@@ -94,37 +88,6 @@ module.exports = function(data, user, callback) {
                     }
                 );
 
-            },
-
-            // &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
-            // #4 - send SMS
-            function(payload, callback){
-                //console.log('4');
-                //callback(null, payload);
-                twilioClient.messages.create(
-                    {
-                        body:       'IoTPay: The device ' + data.description + ' has just exceeded the threshold. You have been billed $' + payload.data.amount/100,
-                        to:         payload.user.mobile,
-                        from:       '+1 928 379 7585'
-
-                    },
-                    function(error, message) {
-                        if (!error) {
-                            // The second argument to the callback will contain the information
-                            // sent back by Twilio for the request. In this case, it is the
-                            // information about the text messsage you just sent:
-                            console.log('TWILIO Success! The SID for this SMS message is:', message.sid);
-                            //console.log('Message sent on:');
-                            //console.log(message.dateCreated);
-                            callback(null, payload);
-                        }
-                        else {
-                            console.log('Oops! There was a TWILIO error.');
-                            callback(error, null);
-
-                        }
-                    }
-                );
             }
         ],
 
